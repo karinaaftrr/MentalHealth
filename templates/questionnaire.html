@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Kuesioner Skrining | Sistem Pakar Kesehatan Mental Gen Z{% endblock %}
+
+{% block content %}
+<div class="questionnaire-header">
+    <a href="{{ url_for('index') }}" class="back-link">&larr; Kembali ke Beranda</a>
+    <h1 class="page-title">Kuesioner Indikator Gejala Kesehatan Mental</h1>
+    <p class="page-subtitle">
+        Pilihlah jawaban <strong>Ya</strong> jika Anda mengalami kondisi berikut dalam beberapa minggu terakhir, 
+        atau <strong>Tidak</strong> jika Anda tidak mengalaminya. Seluruh 25 pertanyaan wajib dijawab.
+    </p>
+
+    <!-- Progress Tracker -->
+    <div class="progress-box">
+        <div class="progress-info">
+            <span class="progress-label">Progres Pengisian:</span>
+            <span class="progress-counter" id="progress-text">0 dari 25 terjawab (0%)</span>
+        </div>
+        <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="progress-fill" style="width: 0%;"></div>
+        </div>
+    </div>
+</div>
+
+<form action="{{ url_for('proses_kuesioner') }}" method="POST" id="screening-form">
+    <div class="questions-list">
+        {% for code, ind in indicators.items() %}
+            <div class="question-card" id="card-{{ code }}">
+                <div class="question-header">
+                    <span class="question-badge">{{ code }}</span>
+                    <span class="question-status" id="status-{{ code }}">Belum dijawab</span>
+                </div>
+
+                <div class="question-body">
+                    <p class="question-text">{{ ind.pertanyaan }}</p>
+                    {% if ind.catatan_verifikasi %}
+                        <div class="question-note">
+                            <strong>Catatan Sumber:</strong> {{ ind.catatan_verifikasi }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="options-container">
+                    <label class="option-label" for="opt-{{ code }}-ya">
+                        <input type="radio" 
+                               name="{{ code }}" 
+                               id="opt-{{ code }}-ya" 
+                               value="1" 
+                               class="option-radio"
+                               data-code="{{ code }}"
+                               required>
+                        <span class="option-custom"></span>
+                        <span class="option-text">Ya</span>
+                    </label>
+
+                    <label class="option-label" for="opt-{{ code }}-tidak">
+                        <input type="radio" 
+                               name="{{ code }}" 
+                               id="opt-{{ code }}-tidak" 
+                               value="0" 
+                               class="option-radio"
+                               data-code="{{ code }}"
+                               required>
+                        <span class="option-custom"></span>
+                        <span class="option-text">Tidak</span>
+                    </label>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="submission-panel">
+        <div class="submission-info">
+            <p id="validation-summary">Pastikan seluruh pertanyaan telah dijawab sebelum mengirimkan formulir.</p>
+        </div>
+        <div class="submission-actions">
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Batal & Kembali</a>
+            <button type="submit" id="btn-submit" class="btn btn-primary btn-large">
+                Proses Hasil Skrining
+            </button>
+        </div>
+    </div>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        initQuestionnaireValidation();
+    });
+</script>
+{% endblock %}

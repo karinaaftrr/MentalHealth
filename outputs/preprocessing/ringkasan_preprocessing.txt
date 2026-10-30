@@ -1,0 +1,18 @@
+RINGKASAN PREPROCESSING DATASET PENELITIAN
+==================================================
+Waktu Proses             : 2026-10-30 07:26:42
+File Sumber              : dataset\dataset_uji.csv
+Total Sampel Data        : 10 kasus uji
+Total Nilai Kosong/NaN   : 0
+Jumlah Indikator Dinilai : 25 indikator (K01 - K25)
+
+Distribusi Kasus Acuan:
+  - G01 (Stres): 2 kasus (20.0%)
+  - G02 (Gangguan Kecemasan): 2 kasus (20.0%)
+  - TIDAK_ADA (Tidak Ada Gangguan): 2 kasus (20.0%)
+  - G03 (Depresi): 1 kasus (10.0%)
+  - G04 (Panic Disorder): 1 kasus (10.0%)
+  - G05 (Bipolar): 1 kasus (10.0%)
+  - G06 (Skizofrenia): 1 kasus (10.0%)
+
+Status Kualitas Data     : VALID dan SIAP UJI

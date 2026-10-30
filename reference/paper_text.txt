@@ -1,0 +1,710 @@
+
+--- PAGE 1 ---
+IKRAM: Jurnal Ilmu Komputer Al Muslim e-ISSN : 2964-5115 
+Volume IV No.2, Oktober 2025  p-ISSN : 2964-4364 
+ 
+ 
+78 
+Sistem Pakar Deteksi Kesehatan Mental Pada Generasi Z 
+Menggunakan Metode Forward Chaining dan Metode Dempster Shafer 
+ 
+Nanda Alifah*1, Rama Adistya Nurtjahya Pamudji2 
+*1,2Teknik Informatika STMIK Pranata Indonesia, Bekasi 
+e-mail: *1anandalifah12@gmail.com, 2ramaadistyanurcahya@gmail.com 
+Abstrak  Article Info 
+Kesehatan mental pada generasi Z menjadi isu yang semakin penting, seiring 
+meningkatnya tekanan sosial, akademik, dan digital. Penelitian ini bertujuan 
+untuk membangun sistem pakar berbasis web yang dapat mendeteksi kondisi 
+kesehatan mental secara dini pada generasi Z menggunakan metode Forward 
+Chaining dan Dempster -Shafer. Metode Forward Chaining digunakan untuk 
+mengidentifikasi gejala berdasarkan rule yang ditentukan, sedangkan metode 
+Dempster-Shafer digunakan untuk menghitung tingkat keyakinan dari hasil 
+diagnosa berdasarkan indikator yang dipilih pengguna. Sistem ini dirancang 
+untuk mempermudah pengguna dalam mengenali gejala gangguan mental 
+seperti stres, depresi, ke cemasan, bipolar, skizofrenia, dan gangguan panik 
+melalui pengisian kuisioner berbasis indikator gejala. Hasil pengujian sistem 
+menggunakan Blackbox Testing menunjukkan bahwa sistem dapat berjalan 
+sesuai fungsinya dan memberikan diagnosa awal yang mendekat i hasil pakar. 
+Sistem ini diharapkan mampu meningkatkan kesadaran kesehatan mental, 
+memberikan rekomendasi awal, dan menjadi alat bantu bagi generasi Z sebelum 
+mendapatkan penanganan profesional.  
+ Kata Kunci:  
+Sistem Pakar,  
+Kesehatan Mental, 
+Generasi Z,  
+Forward Chaining, 
+Dempster-Shafer 
+   
+Abstract   
+Mental health issues among Generation Z have become increasingly critical due 
+to growing academic, social, and digital pressures. This research aims to develop 
+a web -based expert system designed to detect early signs of mental health 
+disorders in Generation Z using the Forward Chaining and Dempster -Shafer 
+methods. The Forward Chaining method is applied to identify symptoms based 
+on predefined rules, while the Dempster -Shafer method is used to calculate the 
+confidence level of the diagnosis based on selected indicators. The system is 
+designed to help users recognize mental health symptoms —such as stress, 
+depression, anxiety, bipolar disorder, schizophrenia, and panic disorder —by 
+completing a questionnaire based on symptom indicators. System testing using 
+Blackbox Testing indicates that the system functions properly and provides early 
+diagnoses closely aligned with expert assessments. This system is expected to 
+raise awareness about mental health, offer initial recommendations, and serve as 
+a decision-support tool for Generation Z prior to seeking professional help. 
+ Keywords:  
+Expert System,  
+Mental Health, 
+Generation Z,  
+Forward Chaining, 
+Dempster-Shafer 
+   
+ 
+ 
+I. PENDAHULUAN 
+Remaja masa kini atau lebih dikenal generasi Z 
+merupakan generasi yang sering kali mengalami 
+depresi, kecemasan, stres hingga kegelisahan. 
+Generasi Z yaitu generasi yang lahir antara  tahun 
+1996 dan 2012 yang dimana  kini dalam tahap 
+perkembangan remaja dan merupakan generasi yang 
+cukup berbeda dibandingkan dengan generasi 
+sebelumnya dalam hal teknologi dan sosial media. 
+Perubahan zaman yang semakin modern pada 
+generasi ini menyebabkan banyaknya remaja yang 
+mengalami depresi, stres dan kecemasan yang 
+berlebihan. Dampaknya bisa sangat merugikan, 
+bahkan berisiko menyebabkan berbagai macam 
+penyakit fisik, bahkan bisa berujung pada kematian. 
+Generasi Z merasa enggan dan malu untuk meminta 
+konsultasi tentang kesehatan mental mereka dari 
+psikologi atau psikiater, serta merasa tidak nyaman 
+dan asing dengan suasana tempat tersebut. 
+--- PAGE 2 ---
+IKRAM: Jurnal Ilmu Komputer Al Muslim e-ISSN : 2964-5115 
+Volume IV No.2, Oktober 2025  p-ISSN : 2964-4364 
+ 
+ 
+79 
+Kurangnya informasi mengenai kondisi kesehatan 
+mental juga merupakan salah satu penyebab 
+terjadinya keterlambatan dalam mengetahui dan 
+menangani kesehatan mental pada diri seseorang.  
+Untuk mengatasi masalah tersebut, sistem pakar 
+dengan metode Forward Chaining dan Dempster-
+shafer adalah dua pendekatan yang dapat digunakan 
+dalam pembangunan sistem pakar untuk deteksi 
+gangguan kesehatan mental. Forward Chaining  
+digunakan untuk mengidentifikasi gejala-gejala awal 
+yang mungkin menunjukan adanya gangguan 
+kesehatan mental. Selanjutnya, metode Dempster-
+shafer digunakan untuk menggabungkan bukti dari 
+berbagai gejala dan memperhitungkan ketidakpastian 
+dalam diagnosis. Metode ini diimplementasikan 
+dalam sebuah sistem pakar berbasis web  yang dapat 
+membantu untuk mengetahui apakah pengguna 
+terutama kalangan generasi z memiliki 
+kecenderungan masalah pada kesehaan mentalnya 
+atau tidak sebelum dibutuhkan konsultasi resmi dari 
+ahli. 
+Dengan demikian, sistem pakar yang akan 
+dibuat diharapkan dapat membantu para generasi z 
+dalam menangani masalah kesehatan mental, 
+memberikan informasi dan meningkatkan kesadaran 
+akan kemungkinan masalah kesehatan mental yang 
+sebenarnya sedang dialami namun tidak pernah 
+disadari. Dengan menggunakan input gejala 
+pengguna, sistem pakar deteksi ini diharapkan dapat  
+mengidentifikasi tingkat akurasi kesehatan mental 
+mencapai 80%. yang dimana, berdasarkan hasil 
+diagnosis, sistem ini akan membuat kesimpulan dan 
+memberikan solusi penanganan yang tepat. 
+  
+II. METODE PENELITIAN 
+a. Forward Chaining  
+Forward Chaining  merupakan metode yang 
+bekerja dengan strategi pengambilan keputusan yang 
+bersumber pada data atau fakta yang ada kemudia 
+mengarah pada suatu kesimpulan, pencarian diawali 
+dari fakta-fakta yang ada kemudian menuju ke 
+premis-premis untuk memperoleh suatu ke simpulan 
+atau tujuan. Bisa dikatakan metode Forward 
+Chaining ialah metode yang bekerja dengan cara 
+melakukan pencarian dari suatu permasalahan 
+kepada solusinya. (Kadek Tutik A., Delima, and 
+Proboyekti 2011) 
+     Sistem akan menganalisa permasalahan deng an 
+mencari fakta yang cocok dengan bagian IF dan 
+aturan IF -THEN. Rule dasar Forward Chaining 
+dijelaskan sebagai berikut : 
+Rule Base: 
+ 
+R1 : IF A AND B THEN D 
+R2 : IF B THEN C 
+ 
+ 
+Gambar 1 Metode Forward  Chaining (Larasaty 
+and Prasetyaningrum 2024) 
+ 
+Langkah- Langkah Metode Forward Chaining yaitu: 
+1) Membuat dengan memulai fakta -fakta yang 
+diketahui. 
+2) Mencocokkan fakta-fakta tersebut dengan bagian 
+IF dari Rules IF-Then. 
+3) Jika ada fakta yang cocok dengan bagian IF , 
+maka rule tersebut dieksekusi. 
+4) Jika sebuah rule dieksekusi, maka sebuah fakta 
+baru (Bagain THEN ) ditambahkan ke dalam 
+Database. 
+5) Proses pencocokan berhenti apabila tidak ada 
+lagi rule yang bisa dieksekusi. 
+ 
+b. Dempster Shafer 
+Dempster pertama kali mengembangkan metode 
+dempster-shafer,yang mencoba model 
+ketidakpastian dengan range probabilitas dari pada 
+sebagai probabilitas tunggal. Teori dempster -shafer 
+adalah representasi, kombinasi, dan propagasi 
+ketidakpastian. Meskipun memiliki beberapa fitur 
+yang secara intristik sesuai dengan pemikiran pakar, 
+teori ini memiliki dasar matematika yang kuat. 
+(Prameswari, Syauqi, and Pramana 2023) 
+Secara umum, teori Demster-  Shafer ditulis 
+dalam suatu interval: [Belief, Plausibility] . Belief 
+(Bel) adalah ukuran kekuatan evidence dalam 
+
+--- PAGE 3 ---
+IKRAM: Jurnal Ilmu Komputer Al Muslim e-ISSN : 2964-5115 
+Volume IV No.2, Oktober 2025  p-ISSN : 2964-4364 
+ 
+ 
+80 
+mendukung suatu himpunan proposisi. Jika bernilai 
+0 maka mengindikasi bahwa tidak ada evidence dan 
+jika 
+bernilai 1 menunjukan adanya kepastian. Plausibility 
+(Pls) akan mengurangi tingkat kepastian dari 
+evidence. Plausibility bernilai 0 sampai 1. (Khalizah, 
+Ilka Zurfia, and Armansyah 2024) 
+ 
+Pl(s) = 1 – Bel(s) 
+ 
+     Plusibility juga bernilai 0 sampai 1. Jika kita 
+percaya, maka dapat dikataka bahwa bel(s)=1, dan 
+Pl(s)=0. Sedangkan jika tidak ada kepercayaan 
+apapun untuk memilih hipotesis tersebut, maka nilai: 
+m{θ}=1,0 dan diketahui X adalah subset dari, dengan 
+m1 sebagai fungsi d ensitasnya, dan Y juga 
+merupakan subset dari dengan m2 sebagai fungsi 
+densitasnya, maka kita dapat membentuk fungsi 
+kombinasi m1 dan m2 sebagai m3, yaitu sebagai 
+persamaan 2. (Syahputra 2023) 
+  
+ 
+(Syahputra 2023) 
+ 
+Keterangan : 
+M1 Ꚛ m2(Z) = mass function dari evidence (Z) 
+M1(X) = Mass function dari evidence (X) 
+M2(Y) = Mass function dari evedence (Y) 
+k = Jumlah evidential conflict. 
+ 
+c. Objek Penelitian 
+     Pada penelitian ini, peneliti melakukan sebuah 
+penelitian di Asha Growth sebuah pusat terapi dan 
+konseling yang beralamat di Monroe Tower, Jl. KH. 
+C. Noor, Kav C5E. Jababeka 2, Cikarang Utara, Kab. 
+Bekasi – Jawa Barat. Asha Growth merupakan klinik 
+atau biro psikologi yang memiliki pelayanan di 
+bidang pengembangan diri, Karakter manusia serta 
+pelayanan dibidang psikologis klinis serta menjadi 
+tempat rujukan masyarakat dalam memperoleh 
+layanan psikologis secara profesional. 
+ 
+d. Analisa Sistem Berjalan 
+     Proses layanan asesmen psikologi dimulai saat 
+klien datang ke klinik dan mengisi formulir 
+pendaftaran. Setelah itu, staf administrasi akan 
+memverifikasi data atau mendaftarkan klien ke 
+sistem. Selanjutnya, klie n menunggu sesi konsultasi 
+bersama psikolog atau konselor. Saat konsultasi, 
+psikolog melakukan asesmen untuk memahami 
+kondisi klien, lalu memberikan arahan atau 
+rekomendasi. Setelah itu, psikolog menyusun laporan 
+hasil asesmen, yang kemudian dicatat dan 
+diselesaikan oleh staf administrasi, lalu diberikan 
+kepada klien. Setelah menerima hasil asesmen, klien 
+dipersilakan memutuskan apakah ingin melanjutkan 
+ke sesi terapi psikologis. Jika ya, staf akan membantu 
+menjadwalkan sesi lanjutan dan memproses 
+pembayaran. Jika tidak, maka proses layanan selesai. 
+Alur ini menunjukkan bahwa sistem melibatkan 
+klien, staf administrasi, dan psikolog dalam proses 
+yang saling terhubung untuk memastikan layanan 
+berjalan dengan rapi dan sesuai kebutuhan. 
+ 
+e. Analisa Kebutuhan Sistem 
+ 
+Tabel 1 Rule Forward Chaining 
+Rule Kaidah Aturan (Rule) 
+Rule 1 IF K12  AND K13 AND K14 AND  
+K15 AND K17 THEN Pasien 
+Kemungkinan Mengalami G01 –  
+Stres 
+Rule 2 IF K05 AND K09 AND K16 AND 
+K17 AND 21 THEN Pasien 
+kemungkinan mengalami G02 – 
+Gangguan Kecemasan 
+Rule 3 IF K20 AND K22 AND K23 AND 
+K24 AND K25 THEN Pasien 
+kemungkinan mengalami G03 -   
+Depresi 
+Rule 4 IF K05AND K07 AND K08 AND K09 
+AND K16 THEN  Pasien 
+kemungkinan mengalami G04 – Panic 
+Disorder 
+Rule 5 IF K03 AND K04 AND K06 AND 
+K20 AND K22 THEN Pasien 
+kemungkinan mengalami G05 – 
+Bipolar 
+Rule 6 IF K 01 AND K02 AND K08 AND 
+K10 AND K 11 AND K18 AND K24 
+THEN Pasien kemungkinan 
+mengalami G06 - Skizofrenia 
+ 
+ 
+ 
+
+--- PAGE 4 ---
+IKRAM: Jurnal Ilmu Komputer Al Muslim e-ISSN : 2964-5115 
+Volume IV No.2, Oktober 2025  p-ISSN : 2964-4364 
+ 
+ 
+81 
+Tabel 2 Tipe Gejala 
+Kode Gejala Nama Gejala Kesehatan 
+Mental 
+G01 Stress 
+G02 Gangguan Kecemasan 
+G03 Depresi 
+G04 Panic Disorder 
+G05 Bipolar 
+G06 Skizofrenia 
+ 
+Tabel 3 Indikator Gejala Kesehatan Mental 
+Kode 
+Indikator Indikator Kesehatan Mental 
+K01 Apakah anda menggunaka minuman beralkohol atau obat obatan terlarang 
+K02 
+Apakah anda sering menjadi penyendiri 
+dan enggan berinteraksi dengan orang 
+lain 
+K03 
+Apakah anda mengalami perubahan pola 
+makan, seperti enggan makan atau makan 
+secara berlebihan 
+ 
+K04 
+Apakah anda sering merasa marah-marah 
+dan sukit mengendalikan kemarahan 
+K05 
+Apakah anda mengalami gangguan tidur, 
+seperti sulit tidur atau sering terbangun 
+dimalam hari 
+K06 Apakah anda merasa Lelah berlebihan 
+K07 
+Apakah anda sering mengalami sakit 
+kepala yang tidak dapat dijelaskan secara 
+medis 
+K08 
+Apakah anda sering mengalami sakit 
+perut yang tidak dapat dijelaskan secara 
+medis 
+K09 Apakah  anda mengalami nyeri dada atau ketegangan pada otot-otot tubuh 
+K10 
+Apakah anda mengalami penurunan 
+gairah seksual atau masalah dalam 
+kehidupan seksual anda 
+K11 
+Apakah anda mengalami kelebihan berat 
+badan atau obesitas 
+K12 
+Apakah anda mengalami tekanan atau 
+tuntutan dalam pekerjaan atau kehidupan 
+sehari-hari 
+K13 Apakah anda mengalami masalah keuangan yang menyebabkan stress? 
+ 
+K14 
+Apkaah anda mengalami masalah dalam 
+hubungan sosial atau interpersonal? 
+K15 
+Apakah anda merasa sulit mengatasi 
+permasalaahn atau menemukan solusi 
+untuk mengurangi stress? 
+ 
+ 
+ 
+K16 
+Apakah anda sering merasa cemas atau 
+gelisah pada berbagai situasi, bukan 
+hanya pada kejadian tertentu? 
+K17 Apakah anda sulit berkonsentrasi dan merasa tidak dapat focus dengan baik? 
+ 
+K18 
+Apakah anda memiliki Riwayat trauma 
+atau pengalaman intimidasi, pelecehan, 
+atau kekerasan? 
+K19 
+Apakah anda mengalami tingkat stress 
+yang tinggi dalam ajngka waktu yang 
+lama 
+K20 Apakah anda terus menerus merasa sedih, bahkan terus menerus menangis? 
+K21 Apakah anda merasa sangat bersalah dan khawatir berlebihan 
+K22 
+Apakah anda merasa tidak dapat 
+menikmati hidup karena kehilangan rasa 
+percaya diri 
+K23 
+Apakah anda mengalami kesulitan 
+membuat keputusan dan mudah 
+tersinggung 
+K24 Apakah bicara atau Gerakan anda menjadi lebih lambat 
+K25 Apakah anda memiliki pikiran untuk menyakiti diri sendiri atau bunuh diri? 
+ 
+--- PAGE 5 ---
+IKRAM: Jurnal Ilmu Komputer Al Muslim e-ISSN : 2964-5115 
+Volume IV No.2, Oktober 2025  p-ISSN : 2964-4364 
+ 
+ 
+82 
+III. HASIL DAN PEMBAHASAN 
+a. Perhitungan Metode Dempster Shafer 
+Tabel 4 Data konsultasi Psikologi 
+ 
+ 
+Berdasarkan relasi atau hubungan antara 
+indikator yang dipilih oleh klien maka gejala yang 
+dihasilkan merupakan gejala dari Stress.  Maka rule 
+yang akan dieksekusi adalah rule 1 yaitu :  
+ 
+R1 = K01 and K02 Then G01 
+K01 (Ya = 0.80) 
+Maka: M1 {G01} = 0.80 
+M1 (θ} = 1 - 0.80 = 0.2 
+K12 (Ya = 0.80) 
+Maka: M2 {G01}  = 0.80 
+M2 (θ) = 1 - 0.80 = 0.2 
+Selanjutnya akan dihitung nilai densitas baru untuk 
+kombinasi M3 seperti perhitungan dibawah ini:  
+ 
+Tabel 5 Perhitungan Dempster Shafer 1 
+ 
+M3{G01} = (0.64 + 0.16 + 0.16) /1-0 = 0.96 
+M3 {θ} = 0.04 /1-0 = 0.04 
+M3 {G01} = 0.96  
+M3 {θ} = 1 - 0.96 = 0.04 
+K14 (Ya = 0.70)  
+Maka = M4 {G01} = 0.70 
+M4 {θ} = 1 - 0.70 = 0.3 
+ 
+Selanjutnya akan diihitung nilai densitas baru 
+untuk kombinasi M5 seperti perhitungan berikut: 
+ 
+ 
+ 
+Tabel 6  Perhitungan Dempster Shafer 2 
+ 
+M5 {G01} = (0.672 + 0.28 + 0.288) /1-0 = 0.981 
+M5 {θ} = 0.012 /1-0 = 0.012 
+M5 {GO1} = 0.981  
+M5 {θ} = 1 - 0.981 = 0.019 
+K15 (Ya = 0.80)  
+Maka = M6 {GO1} = 0.80 
+M6 {θ} = 1 - 0.80 = 0.2 
+ 
+Selanjutnya akan dihitung nilai densitas baru untuk 
+kombinasi M7 seperti perhitungan dibawah ini: 
+ 
+Tabel 7 Perhitungan Dempster Shafer 3 
+ 
+M7 {GO1} = (0.7848 + 0.0152 + 0.1962) /1-0 = 
+0.9962 
+M7{θ} = 0.0038 /1-0 = 0.0038   
+M7 {GO1} = 0.9962    
+M7 {θ} = 1-0.9962 = 0.338   
+K19 (Ya = 0.80)    
+Maka = M8 {GO1} = 0.80   
+M8 {θ} = 1 - 0.80 = 0.2 
+ 
+Selanjutnya akan dihitung nilai densitas baru utnuk 
+kombinasi M9 seperti perhitungan dibawah ini: 
+ 
+Tabel 8 Perhitungan Dempster Shafer 4 
+ 
+M9 {G01} = (0.79696 + 0.00304 + 0.19924) /1-0 
+=0.99924 
+M9 {θ} = 0.00076 /1-0 = 0.000076 
+M9 {G01} = 0.99924  
+Kode 
+Indikator Bobot
+K01 0.80
+K12 0.80
+K13 0.70
+K14 0.80
+K15 0.80
+K17 0.80
+K19 0.80
+K20 0.80
+Menggunakan minumann beralkohol dan obat-obatan 
+terlarang
+Indikator 
+Merasa sedih dan sering menangis)
+Mengalami tingkat stress yang tinggi dan dalam jangka 
+waktu yang lama
+Sulit berkonsentrasi dan dan sulit dapat focus dengan 
+baik
+sulit mengatasi masalah dan menemukan solusi
+Mengalami masalah hubungan sosial atau 
+interpersonal
+Mengalami masalah keuangan
+Mengalami tekanan dan tuntutan pekerjaan atau 
+kehidupan sehari hari
+ 
+M2{G01} 
+{0.80) M2{θ} {0.2} 
+M1 {G01} 
+0.80 {G01} 0.64 {G01} 0.16 
+M1 {θ} 0.2 {G01} 0.16 {G01} 0.04 
+  
+M4 {G01} 
+{0.70) M4{θ} {0.3} 
+M3 {G01} 
+0.96 {G01} 0.672 {G01} 0.288 
+M3 {θ} 0.04 {G01} 0.28 {G01} 0.012 
+  
+M6{G01} 
+{0.80) M6{θ} {0.2} 
+M5 {G01} 
+0.981 {G01} 0.7848 
+{G01} 
+0.1962 
+M5{θ} 
+0.19 
+{G01} 
+0.0152 
+{G01} 
+0.0038 
+ 
+M8{G01} 
+{0.80)  M8{θ} {0.2} 
+M7{G01} 
+0.9962 {G01} 0.79696  
+{G01} 
+0.19924 
+M7 {θ} 
+0.0038 {G01} 0.00304  
+{G01} 
+0.00076 
+--- PAGE 6 ---
+IKRAM: Jurnal Ilmu Komputer Al Muslim e-ISSN : 2964-5115 
+Volume IV No.2, Oktober 2025  p-ISSN : 2964-4364 
+ 
+ 
+83 
+M9 {θ} = 1-0.99924 = 0.00076 
+K20 (Ya = 0.80)  
+Maka = M10 {G01} = 0.80 
+M10 {} = 1 - 0.80 = 0.2 
+Selanjutnya akan dihitung nilai densitas baru untuk 
+kombinasi M11 seperti perhitungan dibawah ini: 
+ 
+Tabel 9 Perhitungan Dempster Shafer 5 
+ 
+M11 {G01} =  (0.799932+0.000608+0.199848) /1-0 
+=1.000388 
+M11 {θ} = 0.000152 /1-0 = 0.000152 
+M9 {G01} = 1.000388 
+M9 {θ} = 1-0.000388 = 0.999612 
+Dari hasil perhitungan yang telah dilakukan, didapat 
+nilai densitas dari Gejala Stress pada Kesehatan 
+mental klien sebesar 0.99 atau 99%. 
+ 
+b. Tampilan Interface 
+ 
+1) Dashboard Utama 
+  Ditampilkan halaman utama dari sistem 
+pakar kesehatan mental pada Generai Z. 
+ 
+ 
+Gambar 2 Menu Dahsboard 
+ 
+2) Login  
+Halaman ini merupakan akses utama dbagi 
+asdministrator untuk mengelola keseluruhan data 
+sistem  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Gambar 3 Login 
+ 
+3) Tampilan Dashboard Admin 
+Tampilan Dashboard Admin merupakan 
+tampilan utama setelah admin berhasil login, dan 
+dapat melakukan kelola data yang ada didalam sistem 
+seperti pada gambar dibawah 
+ 
+ 
+Gambar 4 Dashboard Admin 
+ 
+4) Login User 
+Tampilan form awal yang harus diisi oleh user 
+sebelum memulai proses pengisian kuisioner. 
+ 
+Gambar 5 Login User 
+ 
+5) Indikator Pertanyaan 
+Klien mengisi data kuisioner sesuai dengan 
+keadaan yang sedang dirasakan. 
+ 
+ 
+Gambar 6 Indikator Pertanyaan 
+ 
+M10 {G01} 
+{0.80) M10{θ} {0.2} 
+M9 {G01} 
+0.99924 {G01} 0.799932 
+{G01} 
+0.199848 
+M9 {θ} 
+0.00076 {G01} 0.000608 
+{G01} 
+0.000152 
+
+--- PAGE 7 ---
+IKRAM: Jurnal Ilmu Komputer Al Muslim e-ISSN : 2964-5115 
+Volume IV No.2, Oktober 2025  p-ISSN : 2964-4364 
+ 
+ 
+84 
+6) Halaman Menu Hasil 
+Halaman hasil akan muncul setelah klien 
+memilih indikator yang sesuai dengan kondisi yang 
+sedang dirasakan. 
+ 
+ 
+Gambar 7 Halaman Menu Hasil 
+ 
+IV. KESIMPULAN 
+Berdasarkan hasil penelitian dan implementasi 
+sistem pakar deteksi kesehatan  mental pada generasi 
+Z menggunakan metode Forward Chaining dan 
+Dempster-Shafer, dapat disimpulkan bahwa: 
+1. Sistem pakar yang dikembangkan mampu 
+mengolah gejala dan menghasilkan diagnosa 
+dengan tingkat keyakinan sebesar 80%, melalui 
+metode Forward Chaining dan Dempster-Shafer. 
+Hasil ini lebih akurat dibandingkan penelitian 
+sebelumnya oleh (Dafitrii and Sundari stth 2022) 
+yang menggunakan metode Teorema Bayes 
+dengan akurasi rata-rata di atas 64%  sistem ini 
+menunjukkan tingkat keakuratan yang lebih 
+tinggi dalam mendeteksi tingkat stres atau 
+gangguan kesehatan mental. 
+2. Sistem dapat membantu mengidentifikasi tingkat 
+gangguan kesehatan ment al berdasarkan gejala 
+yang diberikan, serta menghasilkan output yang 
+mendekati analisa pakar meskipun data gejala 
+tidak selalu lengkap. 
+Hasil pengujian fungsional, sistem terbukti 
+berjalan dengan baik dan memiliki tampilan 
+antarmuka yang responsif, sehingga mendukung 
+kemudahan penggunaan oleh pengguna umum, 
+khususnya Generasi Z. 
+ 
+V. REFERENSI 
+ Anggriani. 2023. “Sistem Pakar Untuk Mendiagnosa 
+Gangguan Kesehatan Mental Menggunakan 
+Metode Forward Chaining.” Jurnal SANTI - 
+Sistem Informasi Dan Teknik Informasi  3 (1): 
+10–18. https://doi.org/10.58794/santi.v3i1.255. 
+Beka Dede, Elfrida Veranda, Sebastianus Adi 
+Santoso Mola, and Yelly Yosiana Nabuasa. 
+2022. “Implementasi Hamilton Anxiety Rating 
+Scale Untuk Mendiagnosis Tingkat Kecemasan 
+Pada Mmahasiswa Dalam Penyusunan 
+Skripsi.” Jurnal Komputer Dan Informatika 10 
+(1): 55 –64. 
+https://doi.org/10.35508/jicon.v10i1.6353. 
+Dafitrii, Haida, and Siti Sundari stth. 2022. “Sistem 
+Pakar Mendeteksi Tingkat Stres Mahasiswa 
+Harapan Dalam Penyusunan Skripsi Teknik 
+Informatika Dengan Menggunakan Metode 
+Teorema Bayes.” Syntax : Journal of Software 
+Engineering, Computer Science and 
+Information Technology  2 (2): 165– 71. 
+https://doi.org/10.46576/syntax.v2i2.1678. 
+Diana, Vidya. 2020. Ke sehatan Mental (Sejarah 
+Kesehatan Mental) . Halodoc.Com. 
+https://www.researchgate.net/profile/Diana-
+Fakhriyani/publication/348819060_Kesehatan
+_Mental/links/60591b56458515e834643f66/K
+esehatan-Mental.pdf. 
+Kadek Tutik A., Gusti Ayu, Rosa Delima, and Umi 
+Proboyekti. 2011. “Penerapan Forward 
+Chaining Pada Program Diagnosa Anak 
+Penderita Autisme.” Jurnal Informatika  5 (2). 
+https://doi.org/10.21460/inf.2009.52.73. 
+Khalizah, Siti, Ilka Zurfia, and Armansyah. 2024. 
+“Penerapan Metode Forward Chaining Dan 
+Dempster-Shafer Pada Sistem Pakar Deteksi 
+Dini Gangguan Kesehatan Mental.” Jurnal 
+Fasilkom 14 (1): 176– 85. 
+https://doi.org/10.37859/jf.v14i1.6942. 
+Kusumadewi. 2003. “Rtificial Ntelligence.” 
+Artificial Intelligence (Teknik Dan Aplikasinya, 
+1–335. 
+Larasaty, Raditha, and Putri Taqwa Prasetyaningrum. 
+2024. “Sistem Pakar Diagnosa Gangguan 
+Kecemasan Pada Difabel Menggunakan 
+Metode Forward Chaining Berbasis Web” 5 
+(3): 138–54. 
+Nurabsharina, Amanda Putri, and Rifki Kosasih. 
+2020. “Aplikasi Sistem Pakar Diagnosis 
+Tingkat Depresi Pada Remaja Berbasis 
+Android.” Jurnal Ilmiah Informatika Komputer 
+
+--- PAGE 8 ---
+IKRAM: Jurnal Ilmu Komputer Al Muslim e-ISSN : 2964-5115 
+Volume IV No.2, Oktober 2025  p-ISSN : 2964-4364 
+ 
+ 
+85 
+25 (1): 76– 85. 
+https://doi.org/10.35760/ik.2020.v25i1.2418. 
+Prameswari, Kharisma Desti, Achmad Syauqi, and 
+Danar Ardian Pramana. 2023. “Implementasi 
+Framework CodeIgniter Pada Sistem Informasi 
+Pelayanan Kesehatan (Studi Kasus : Praktek 
+Mandiri Dr . Kartika).” Jurnal Sistem Informasi 
+Dan Teknologi Peradaban (JSITP)  4 (2): 11–
+17. 
+https://journal.peradaban.ac.id/index.php/jsitp/
+article/view/1619. 
+Rahmadhani, Annisa, and Andri Aningsih. 2020. 
+“Sistem Pakar Deteksi Dini Kesehatan Mental 
+Menggunakan Metode Dempster -Shafer 
+Mental Health Initial Detection Expert System 
+Using Dempster Shafer Method” 10 (1): 37–49. 
+Syahputra, Hadi. 2023. “Perancangan Aplikasi 
+Sistem Pakar Untuk Pengobatan Bekam 
+Dengan Metode Dempster Shafer.” Jurnal 
+Sains Informatika Terapan 2 (3): 74– 78. 
+https://doi.org/10.62357/jsit.v2i3.187. 
+ 
+ 
+ 
+ 
+ 
+ 

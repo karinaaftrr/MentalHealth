@@ -1,0 +1,11 @@
+id_kasus,label_acuan_kode,label_acuan_nama,prediksi_kode,prediksi_nama,status_kesesuaian,aturan_cocok,total_indikator_positif
+CASE-002,G01,Stres,G01,Stres,SESUAI,R1,6
+CASE-005,G01,Stres,G01,Stres,SESUAI,R1,6
+CASE-007,G02,Gangguan Kecemasan,G02,Gangguan Kecemasan,SESUAI,R2,6
+CASE-010,G02,Gangguan Kecemasan,G02,Gangguan Kecemasan,SESUAI,R2,6
+CASE-012,G03,Depresi,G03,Depresi,SESUAI,R3,6
+CASE-017,G04,Panic Disorder,G04,Panic Disorder,SESUAI,R4,6
+CASE-022,G05,Bipolar,G05,Bipolar,SESUAI,R5,6
+CASE-027,G06,Skizofrenia,G06,Skizofrenia,SESUAI,R6,8
+CASE-031,TIDAK_ADA,Tidak Ada Gangguan,TIDAK_ADA,Tidak Ada Gangguan,SESUAI,TIDAK_ADA,0
+CASE-033,TIDAK_ADA,Tidak Ada Gangguan,TIDAK_ADA,Tidak Ada Gangguan,SESUAI,TIDAK_ADA,2

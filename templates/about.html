@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Tentang Sistem | Sistem Pakar Deteksi Kesehatan Mental Gen Z{% endblock %}
+
+{% block content %}
+<div class="content-header">
+    <a href="{{ url_for('index') }}" class="back-link">&larr; Kembali ke Beranda</a>
+    <h1 class="page-title">Tentang Sistem Pakar & Dasar Metodologi</h1>
+    <p class="page-subtitle">Transparansi ilmiah mengenai basis pengetahuan, kaidah inferensi, dan batasan metodologi</p>
+</div>
+
+<div class="card mb-6">
+    <h2 class="card-title">1. Sumber Rujukan Ilmiah</h2>
+    <p>
+        Sistem ini dibangun berdasarkan naskah publikasi ilmiah:
+    </p>
+    <div class="citation-box">
+        <p><strong>Judul:</strong> Sistem Pakar Deteksi Kesehatan Mental Pada Generasi Z Menggunakan Metode Forward Chaining dan Metode Dempster Shafer</p>
+        <p><strong>Penulis:</strong> Nanda Alifah & Rama Adistya Nurtjahya Pamudji</p>
+        <p><strong>Institusi:</strong> STMIK Pranata Indonesia, Bekasi</p>
+        <p><strong>Publikasi:</strong> <em>IKRAM: Jurnal Ilmu Komputer Al Muslim</em>, Volume IV No. 2, Oktober 2025, hal. 78–85. ISSN: 2964-5115.</p>
+    </div>
+</div>
+
+<div class="card mb-6">
+    <h2 class="card-title">2. Metode Inferensi Forward Chaining</h2>
+    <p>
+        Forward Chaining adalah metode penalaran maju (*data-driven*) yang memulai penalaran dari kumpulan fakta 
+        (jawaban kuesioner pengguna) menuju premis kaidah IF-THEN untuk menghasilkan kesimpulan kondisi mental.
+    </p>
+    <div class="steps-table-wrapper mt-4">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Rule</th>
+                    <th>Premis Indikator (AND)</th>
+                    <th>Luaran Kondisi</th>
+                    <th>Keterangan Normalisasi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rule in rules %}
+                    <tr>
+                        <td><strong>{{ rule.id }}</strong></td>
+                        <td>{{ rule.premis|join(' AND ') }}</td>
+                        <td><strong>{{ rule.kesimpulan }}</strong> ({{ rule.nama_kondisi }})</td>
+                        <td>{{ rule.catatan }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card mb-6">
+    <h2 class="card-title">3. Metode Dempster-Shafer & Audit Bobot</h2>
+    <p>
+        Metode Dempster-Shafer digunakan untuk menghitung derajat kepastian (*belief*) terhadap hipotesis berdasarkan kombinasi eviden.
+    </p>
+    <div class="explanation-box mt-3">
+        <h4 class="box-title">Audit Bobot dari Jurnal Sumber:</h4>
+        <p>
+            Dalam naskah jurnal sumber, tabel bobot hanya mempublikasikan nilai untuk 8 indikator:
+            <code>K01 (0.80), K12 (0.80), K13 (0.70), K14 (0.80), K15 (0.80), K17 (0.80), K19 (0.80), K20 (0.80)</code>.
+        </p>
+        <p>
+            Untuk kondisi <strong>G01 (Stres)</strong>, seluruh 5 indikator premis (K12, K13, K14, K15, K17) memiliki bobot resmi, 
+            sehingga nilai keyakinan dapat dihitung secara sah. Untuk kondisi G02–G06, sistem <strong>tidak mengarang bobot palsu</strong> 
+            dan secara transparan menyatakan status bahwa nilai keyakinan belum dapat dihitung karena keterbatasan data pada publikasi sumber.
+        </p>
+    </div>
+</div>
+
+<div class="card mb-6">
+    <h2 class="card-title">4. Batasan & Privasi Sistem</h2>
+    <ul class="bullet-list">
+        <li><strong>Bukan Alat Diagnosis Klinis:</strong> Seluruh output bersifat skrining kesadaran awal. Diagnosis medis hanya dapat dikeluarkan oleh dokter spesialis kedokteran jiwa (psikiater) atau psikolog klinis.</li>
+        <li><strong>Privasi Penuh:</strong> Sistem tidak mengumpulkan data pribadi (nama, alamat, NIK). Setiap pemeriksaan diberikan ID privat acak yang disimpan secara terisolasi.</li>
+        <li><strong>Logika Deterministik:</strong> Sistem tidak menggunakan model probabilistik kotak hitam (*black-box machine learning*), melainkan basis aturan terstruktur yang dapat diverifikasi alurnya secara terbuka.</li>
+    </ul>
+</div>
+
+<div class="mt-6 text-center">
+    <a href="{{ url_for('kuesioner') }}" class="btn btn-primary btn-large">Mulai Kuesioner Sekarang</a>
+</div>
+{% endblock %}

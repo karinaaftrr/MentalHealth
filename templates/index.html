@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}Beranda | Sistem Pakar Deteksi Kesehatan Mental Generasi Z{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <div class="hero-badge">Layanan Skrining Dini Berbasis Sistem Pakar</div>
+    <h1 class="hero-title">Sistem Pakar Deteksi Indikasi Awal Kondisi Kesehatan Mental Generasi Z</h1>
+    <p class="hero-description">
+        Website ini dirancang untuk membantu Generasi Z mengenali tanda-tanda awal tekanan psikologis 
+        dan masalah kesehatan mental melalui kuesioner terstruktur. Sistem mengombinasikan penalaran 
+        aturan <em>Forward Chaining</em> dan analisis tingkat keyakinan <em>Dempster-Shafer</em> berdasarkan kaidah ilmiah.
+    </p>
+
+    <div class="hero-actions">
+        <a href="{{ url_for('kuesioner') }}" class="btn btn-primary btn-large">Mulai Kuesioner Skrining</a>
+        <a href="{{ url_for('tentang') }}" class="btn btn-secondary btn-large">Pelajari Metodologi</a>
+    </div>
+
+    <div class="disclaimer-box">
+        <div class="disclaimer-badge">Peringatan Medis</div>
+        <p class="disclaimer-text">
+            Hasil pemeriksaan pada website ini <strong>bukan merupakan vonis atau diagnosis medis</strong>. 
+            Layanan ini bertujuan sebagai sarana deteksi dini mandiri. Jika Anda mengalami krisis psikologis 
+            atau tekanan berat yang berkelanjutan, sangat disarankan untuk berkonsultasi langsung dengan psikolog, 
+            psikiater, atau fasilitas layanan kesehatan terdekat.
+        </p>
+    </div>
+</section>
+
+<section class="section-container">
+    <div class="section-header">
+        <h2 class="section-title">Alur Proses Pemeriksaan</h2>
+        <p class="section-subtitle">Tiga langkah mudah untuk mengetahui indikasi kondisi kesehatan mental Anda</p>
+    </div>
+
+    <div class="steps-grid">
+        <div class="step-card">
+            <div class="step-number">1</div>
+            <h3 class="step-title">Pengisian Kuesioner</h3>
+            <p class="step-text">
+                Jawab 25 pertanyaan indikator gejala dengan jujur sesuai apa yang Anda rasakan akhir-akhir ini. 
+                Pilihan jawaban berupa Ya atau Tidak.
+            </p>
+        </div>
+
+        <div class="step-card">
+            <div class="step-number">2</div>
+            <h3 class="step-title">Inferensi Forward Chaining</h3>
+            <p class="step-text">
+                Sistem mencocokkan fakta indikator yang Anda laporkan dengan basis aturan pakar untuk mendeteksi 
+                kondisi potensial seperti Stres, Depresi, atau Kecemasan.
+            </p>
+        </div>
+
+        <div class="step-card">
+            <div class="step-number">3</div>
+            <h3 class="step-title">Hasil & Rekomendasi</h3>
+            <p class="step-text">
+                Dapatkan laporan indikasi awal yang transparan, nilai keyakinan Dempster-Shafer bila tersedia, 
+                serta saran langkah awal yang aman dan membangun.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="section-container">
+    <div class="section-header">
+        <h2 class="section-title">Cakupan Kondisi yang Dikenali</h2>
+        <p class="section-subtitle">Sistem memetakan 6 kelompok kondisi kesehatan mental berdasarkan basis pengetahuan pakar</p>
+    </div>
+
+    <div class="conditions-grid">
+        <div class="condition-card">
+            <span class="condition-code">G01</span>
+            <h3 class="condition-name">Stres</h3>
+            <p class="condition-desc">Ketegangan mental atau emosional akibat beban tugas, masalah finansial, atau relasi sosial.</p>
+        </div>
+
+        <div class="condition-card">
+            <span class="condition-code">G02</span>
+            <h3 class="condition-name">Gangguan Kecemasan</h3>
+            <p class="condition-desc">Rasa khawatir berlebihan, gelisah persisten, dan ketegangan fisik di berbagai kondisi.</p>
+        </div>
+
+        <div class="condition-card">
+            <span class="condition-code">G03</span>
+            <h3 class="condition-name">Depresi</h3>
+            <p class="condition-desc">Perasaan sedih mendalam, kehilangan minat hidup, gangguan tidur, dan keputusasaan.</p>
+        </div>
+
+        <div class="condition-card">
+            <span class="condition-code">G04</span>
+            <h3 class="condition-name">Panic Disorder</h3>
+            <p class="condition-desc">Serangan rasa takut atau cemas hebat yang muncul tiba-tiba disertai gejala somatik.</p>
+        </div>
+
+        <div class="condition-card">
+            <span class="condition-code">G05</span>
+            <h3 class="condition-name">Bipolar</h3>
+            <p class="condition-desc">Fluktuasi suasana hati ekstrem antara fase gembira/kemarahan tinggi dan fase depresi sedih.</p>
+        </div>
+
+        <div class="condition-card">
+            <span class="condition-code">G06</span>
+            <h3 class="condition-name">Skizofrenia</h3>
+            <p class="condition-desc">Gangguan proses pikir dan persepsi yang disertai penarikan diri sosial dan perlambatan respon.</p>
+        </div>
+    </div>
+</section>
+
+<section class="privacy-section">
+    <div class="privacy-card">
+        <h3 class="privacy-title">Jaminan Privasi & Keamanan Data</h3>
+        <p class="privacy-desc">
+            Website ini beroperasi sepenuhnya anonim. Kami <strong>tidak meminta nama lengkap, NIK, alamat, nomor telepon, 
+            atau identitas pribadi apa pun</strong>. Data jawaban hanya diproses untuk inferensi sistem pakar dan disimpan 
+            menggunakan kode acak yang tidak dapat dihubungkan ke identitas Anda.
+        </p>
+    </div>
+</section>
+{% endblock %}

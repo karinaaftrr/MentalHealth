@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block title %}Hasil Skrining | Sistem Pakar Kesehatan Mental Gen Z{% endblock %}
+
+{% block content %}
+<div class="result-header">
+    <div class="result-meta">
+        <span class="meta-item"><strong>ID Pemeriksaan:</strong> {{ screening.id }}</span>
+        <span class="meta-item"><strong>Waktu:</strong> {{ screening.waktu_pemeriksaan[:19].replace('T', ' ') }}</span>
+        <span class="meta-item"><strong>Total Gejala Dilaporkan:</strong> {{ screening.total_ya }} dari 25</span>
+    </div>
+    <h1 class="page-title">Hasil Pemeriksaan Indikasi Awal</h1>
+    <p class="page-subtitle">
+        Berikut adalah luaran inferensi sistem pakar berdasarkan 25 jawaban indikator yang telah Anda kirimkan.
+    </p>
+</div>
+
+<!-- Medical Disclaimer Banner -->
+<div class="disclaimer-box mb-6">
+    <div class="disclaimer-badge">Pemberitahuan Medis</div>
+    <p class="disclaimer-text">
+        Hasil ini adalah luaran penalaran aturan sistem pakar dan <strong>BUKAN merupakan diagnosis klinis atau medis resmi</strong>. 
+        Penegakan diagnosis gangguan kejiwaan hanya dapat dilakukan oleh tenaga ahli berwenang (psikolog klinis atau psikiater) 
+        melalui wawancara klinis mendalam.
+    </p>
+</div>
+
+{% if not screening.hasil_inferensi or screening.hasil_inferensi|length == 0 %}
+    <!-- Kondisi: Tidak Ada Aturan yang Cocok -->
+    <div class="result-card no-match-card">
+        <div class="status-indicator-badge badge-neutral">Tidak Ada Kecocokan Aturan</div>
+        <h2 class="card-title">Sistem Belum Menemukan Pola Aturan yang Cocok</h2>
+        <p class="card-lead">
+            Berdasarkan basis pengetahuan yang bersumber dari jurnal ilmiah, kombinasi jawaban yang Anda berikan 
+            tidak memenuhi seluruh premis kaidah aturan <em>Forward Chaining</em> (R1–R6) untuk 6 kondisi gangguan yang dimodelkan.
+        </p>
+
+        <div class="explanation-box">
+            <h4 class="box-title">Penjelasan & Keterangan</h4>
+            <p>
+                Hal ini dapat menunjukkan bahwa gejala yang Anda rasakan berada di bawah ambang batas kaidah aturan (*sub-threshold*), 
+                merupakan kondisi fluktuasi emosi wajar sehari-hari, atau mencerminkan pola yang belum tercakup dalam 6 aturan pakar yang tersedia.
+            </p>
+            <p>
+                Jika Anda tetap merasakan ketidaknyamanan emosional, stres berat, atau kecemasan yang mengganggu aktivitas sehari-hari, 
+                jangan ragu untuk berdiskusi dengan konselor atau psikolog profesional.
+            </p>
+        </div>
+
+        {% if screening.total_ya > 0 %}
+            <div class="reported-indicators-box">
+                <h4 class="box-title">Indikator yang Anda Jawab "Ya" ({{ screening.total_ya }} Indikator):</h4>
+                <ul class="indicator-tags-list">
+                    {% for code, val in screening.jawaban.items() %}
+                        {% if val in [1, '1', True, 'Ya', 'ya'] %}
+                            <li class="indicator-tag">
+                                <strong>{{ code }}:</strong> {{ indicators[code].pertanyaan }}
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+
+{% else %}
+    <!-- Kondisi: Satu atau Beberapa Aturan Cocok -->
+    <div class="matched-results-wrapper">
+        <div class="summary-match-banner">
+            <span class="match-count-badge">Terdeteksi {{ screening.hasil_inferensi|length }} Indikasi Kondisi</span>
+            <p class="match-summary-text">
+                Kombinasi jawaban Anda memenuhi premis kaidah aturan pakar berikut. Sistem menyajikan seluruh kondisi relevan tanpa memilih secara sembarangan:
+            </p>
+        </div>
+
+        {% for cond in screening.hasil_inferensi %}
+            <div class="result-card condition-match-card">
+                <div class="card-top-row">
+                    <span class="condition-code-pill">{{ cond.kode }}</span>
+                    <span class="status-indicator-badge badge-warning">Aturan Cocok</span>
+                </div>
+
+                <h2 class="condition-heading">{{ cond.nama }}</h2>
+                <p class="condition-description">{{ cond.deskripsi }}</p>
+
+                <!-- Section: Dempster-Shafer Confidence -->
+                <div class="ds-belief-box">
+                    <h4 class="subheading">Perhitungan Tingkat Keyakinan (Dempster-Shafer)</h4>
+                    
+                    {% set ds_info = screening.nilai_keyakinan.results[cond.kode] if (screening.nilai_keyakinan and screening.nilai_keyakinan.results and cond.kode in screening.nilai_keyakinan.results) else None %}
+                    
+                    {% if ds_info and ds_info.can_calculate %}
+                        <div class="belief-calculated">
+                            <div class="belief-metric">
+                                <span class="metric-number">{{ ds_info.percentage }}%</span>
+                                <span class="metric-label">Tingkat Keyakinan (Belief Value: {{ ds_info.belief_value }})</span>
+                            </div>
+                            <p class="metric-note">
+                                Nilai dihitung secara sah berdasarkan formula kombinasi Dempster-Shafer menggunakan bobot pakar yang dipublikasikan pada jurnal sumber.
+                            </p>
+
+                            {% if ds_info.steps %}
+                                <details class="calculation-steps-detail">
+                                    <summary>Lihat Tahapan Kombinasi Dempster-Shafer</summary>
+                                    <div class="steps-table-wrapper">
+                                        <table class="data-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Tahap</th>
+                                                    <th>Indikator</th>
+                                                    <th>Bobot</th>
+                                                    <th>Mass { {{ cond.kode }} }</th>
+                                                    <th>Mass { &theta; }</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for step in ds_info.steps %}
+                                                    <tr>
+                                                        <td>Tahap {{ step.step }}</td>
+                                                        <td>{{ step.combined_with_indicator or step.indicator }}</td>
+                                                        <td>{{ step.weight }}</td>
+                                                        <td>{{ step.mass_h }}</td>
+                                                        <td>{{ step.mass_theta }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </details>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <div class="belief-uncalculated">
+                            <span class="status-badge-incomplete">Nilai Keyakinan Belum Dapat Dihitung</span>
+                            <p class="uncalculated-text">
+                                {% if ds_info and ds_info.message %}
+                                    {{ ds_info.message }}
+                                {% else %}
+                                    Nilai keyakinan Dempster-Shafer untuk kondisi ini belum dapat dihitung karena bobot indikator pendukung tidak dipublikasikan dalam naskah jurnal sumber. Sistem memprioritaskan integritas ilmiah dengan tidak mengarang bobot palsu.
+                                {% endif %}
+                            </p>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Section: Supporting Indicators -->
+                <div class="supporting-indicators-section">
+                    <h4 class="subheading">Indikator Gejala Pendukung yang Terpenuhi:</h4>
+                    <ul class="indicators-list">
+                        {% for ind in cond.supporting_indicators %}
+                            <li class="indicator-item">
+                                <span class="ind-pill">{{ ind.kode }}</span>
+                                <span class="ind-question">{{ ind.pertanyaan }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <!-- Section: Recommendations -->
+                <div class="recommendation-section">
+                    <h4 class="subheading">Saran & Langkah Penanganan Awal:</h4>
+                    <p class="recommendation-text">{{ cond.saran }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<!-- Action Buttons -->
+<div class="result-actions-panel">
+    <a href="{{ url_for('kuesioner') }}" class="btn btn-primary btn-large">Ulangi Kuesioner</a>
+    <a href="{{ url_for('index') }}" class="btn btn-secondary">Kembali ke Beranda</a>
+</div>
+{% endblock %}

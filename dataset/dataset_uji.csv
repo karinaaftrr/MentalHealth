@@ -1,0 +1,11 @@
+id_kasus,K01,K02,K03,K04,K05,K06,K07,K08,K09,K10,K11,K12,K13,K14,K15,K16,K17,K18,K19,K20,K21,K22,K23,K24,K25,label_acuan_kode,label_acuan_nama,kategori_kasus
+CASE-002,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,1,0,1,0,0,0,0,0,0,G01,Stres,Kanonikal
+CASE-005,0,0,0,0,0,0,1,0,0,0,0,1,1,1,1,0,1,0,0,0,0,0,0,0,0,G01,Stres,Kanonikal
+CASE-007,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,1,1,0,0,0,G02,Gangguan Kecemasan,Kanonikal
+CASE-010,0,0,0,0,1,1,0,0,1,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,G02,Gangguan Kecemasan,Kanonikal
+CASE-012,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,1,G03,Depresi,Kanonikal
+CASE-017,0,0,0,0,1,0,1,1,1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,G04,Panic Disorder,Kanonikal
+CASE-022,0,0,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,0,G05,Bipolar,Kanonikal
+CASE-027,1,1,0,0,0,0,0,1,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0,1,0,G06,Skizofrenia,Kanonikal
+CASE-031,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,TIDAK_ADA,Tidak Ada Gangguan,Kontrol Negatif
+CASE-033,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,TIDAK_ADA,Tidak Ada Gangguan,Sub-ambang
