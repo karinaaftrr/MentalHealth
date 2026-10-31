@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block title %}Pengujian 10 Data Kasus Acuan | Sistem Pakar Kesehatan Mental Gen Z{% endblock %}
+
+{% block content %}
+<div class="questionnaire-header">
+    <a href="{{ url_for('index') }}" class="back-link">&larr; Kembali ke Beranda</a>
+    <h1 class="page-title">Pengujian 10 Data Kasus Acuan (Benchmark)</h1>
+    <p class="page-subtitle">
+        Sistem berfokus penuh pada validitas logika inferensi <strong>Forward Chaining</strong> dan kalkulasi <strong>Dempster-Shafer</strong> 
+        tanpa beban database fisik. Di bawah ini adalah 10 data kasus acuan berlabel (standar emas) untuk memverifikasi ketepatan logika program.
+    </p>
+</div>
+
+<!-- Statistik Ringkas -->
+<div class="stats-overview-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px;">
+    <div class="card" style="background: white; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 20px; text-align: center;">
+        <div style="font-size: 28px; font-weight: 700; color: var(--primary);">{{ total_cases }}</div>
+        <div style="font-size: 13px; color: var(--text-muted); font-weight: 500; margin-top: 4px;">Total Kasus Uji Acuan</div>
+    </div>
+    <div class="card" style="background: white; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 20px; text-align: center;">
+        <div style="font-size: 28px; font-weight: 700; color: var(--success-text);">{{ accuracy }}%</div>
+        <div style="font-size: 13px; color: var(--text-muted); font-weight: 500; margin-top: 4px;">Akurasi Logika Inferensi</div>
+    </div>
+    <div class="card" style="background: white; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 20px; text-align: center;">
+        <div style="font-size: 28px; font-weight: 700; color: #0284C7;">{{ correct_count }} / {{ total_cases }}</div>
+        <div style="font-size: 13px; color: var(--text-muted); font-weight: 500; margin-top: 4px;">Kasus Terklasifikasi Tepat</div>
+    </div>
+    <div class="card" style="background: white; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 20px; text-align: center;">
+        <div style="font-size: 20px; font-weight: 700; color: #166534; margin-top: 6px;">RAM In-Memory</div>
+        <div style="font-size: 13px; color: var(--text-muted); font-weight: 500; margin-top: 6px;">Status Database (Bebas SQLite)</div>
+    </div>
+</div>
+
+<!-- Penjelasan Metodologi -->
+<div class="card mb-6" style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: var(--radius-md); padding: 18px 24px; margin-bottom: 24px;">
+    <h3 style="font-size: 15px; font-weight: 600; color: #166534; margin-bottom: 6px;">
+        💡 Fokus Evaluasi Logika Sistem Pakar
+    </h3>
+    <p style="font-size: 14px; color: #166534; line-height: 1.5; margin: 0;">
+        Pengujian ini memverifikasi bahwa logika penalaran <strong>Forward Chaining</strong> mengenali setiap gejala kanonikal secara tepat 
+        (Sensitivitas 100%), menolak kasus kontrol negatif dan sub-ambang tanpa salah vonis (Spesifisitas 100%), 
+        serta menghitung nilai keyakinan <strong>Dempster-Shafer</strong> sesuai kaidah publikasi ilmiah.
+    </p>
+</div>
+
+<!-- Tabel 10 Data Uji -->
+<div class="card" style="background: white; border: 1px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-card);">
+    <div style="padding: 16px 20px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <div>
+            <h3 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin: 0;">Daftar 10 Kasus Uji Acuan</h3>
+            <span style="font-size: 12px; color: var(--text-muted);">Klik tombol <strong>Uji Kasus</strong> untuk melihat tracing inferensi lengkap per data</span>
+        </div>
+        <a href="{{ url_for('kuesioner') }}" class="btn btn-secondary btn-sm" style="font-size: 13px; padding: 6px 14px;">
+            Isi Manual via Kuesioner
+        </a>
+    </div>
+
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14px;">
+            <thead>
+                <tr style="background: var(--bg-surface-subtle); border-bottom: 1px solid var(--border-color); color: var(--text-secondary); font-size: 13px;">
+                    <th style="padding: 12px 16px;">No</th>
+                    <th style="padding: 12px 16px;">ID Kasus</th>
+                    <th style="padding: 12px 16px;">Tipe Kasus</th>
+                    <th style="padding: 12px 16px;">Gejala Aktif</th>
+                    <th style="padding: 12px 16px;">Label Acuan (Pakar)</th>
+                    <th style="padding: 12px 16px;">Prediksi Sistem</th>
+                    <th style="padding: 12px 16px;">Nilai Belief (DS)</th>
+                    <th style="padding: 12px 16px; text-align: center;">Kesesuaian</th>
+                    <th style="padding: 12px 16px; text-align: right;">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in results %}
+                <tr style="border-bottom: 1px solid var(--border-color); transition: background-color 0.15s ease;">
+                    <td style="padding: 12px 16px; font-weight: 500; color: var(--text-muted);">{{ loop.index }}</td>
+                    <td style="padding: 12px 16px; font-weight: 600; color: var(--text-primary);">
+                        <code>{{ item.id_kasus }}</code>
+                    </td>
+                    <td style="padding: 12px 16px;">
+                        {% if item.kategori_kasus == 'Kanonikal' %}
+                            <span style="display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; background: #EFF6FF; color: #1D4ED8;">Kanonikal</span>
+                        {% elif item.kategori_kasus == 'Kontrol Negatif' %}
+                            <span style="display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; background: #F1F5F9; color: #475569;">Kontrol Negatif</span>
+                        {% else %}
+                            <span style="display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; background: #FFFBEB; color: #92400E;">Sub-ambang</span>
+                        {% endif %}
+                    </td>
+                    <td style="padding: 12px 16px; max-width: 200px;">
+                        {% if item.gejala_aktif %}
+                            <span style="font-size: 12px; color: var(--text-secondary); word-break: break-word;">
+                                {{ item.gejala_aktif|join(', ') }}
+                            </span>
+                            <span style="font-size: 11px; color: var(--text-muted);">({{ item.total_gejala }} gejala)</span>
+                        {% else %}
+                            <span style="font-size: 12px; color: var(--text-muted); font-style: italic;">Tidak ada gejala</span>
+                        {% endif %}
+                    </td>
+                    <td style="padding: 12px 16px; font-weight: 500;">
+                        {% if item.label_acuan_kode != 'TIDAK_ADA' %}
+                            <strong>{{ item.label_acuan_kode }}</strong> - {{ item.label_acuan_nama }}
+                        {% else %}
+                            <span style="color: var(--text-muted);">Tidak Ada Gangguan</span>
+                        {% endif %}
+                    </td>
+                    <td style="padding: 12px 16px; font-weight: 600; color: var(--primary);">
+                        {% if item.prediksi_kode != 'TIDAK_ADA' %}
+                            {{ item.prediksi_kode }} - {{ item.prediksi_nama }}
+                        {% else %}
+                            <span style="color: var(--text-muted); font-weight: normal;">Tidak Ada Gangguan</span>
+                        {% endif %}
+                    </td>
+                    <td style="padding: 12px 16px;">
+                        {% if item.belief_percentage %}
+                            <span style="display: inline-block; padding: 2px 8px; background: #F0FDF4; border: 1px solid #BBF7D0; color: #166534; border-radius: 4px; font-weight: 600; font-size: 12px;">
+                                {{ item.belief_percentage }}%
+                            </span>
+                        {% elif item.prediksi_kode == 'TIDAK_ADA' %}
+                            <span style="font-size: 12px; color: var(--text-muted);">-</span>
+                        {% else %}
+                            <span style="font-size: 11px; color: #B45309;" title="Bobot tidak lengkap pada publikasi jurnal">Bobot parsial</span>
+                        {% endif %}
+                    </td>
+                    <td style="padding: 12px 16px; text-align: center;">
+                        {% if item.is_correct %}
+                            <span style="color: #166534; font-weight: 700; font-size: 14px;">✅ Cocok</span>
+                        {% else %}
+                            <span style="color: #DC2626; font-weight: 700; font-size: 14px;">❌ Beda</span>
+                        {% endif %}
+                    </td>
+                    <td style="padding: 12px 16px; text-align: right;">
+                        <a href="{{ url_for('uji_kasus_langsung', case_id=item.id_kasus) }}" 
+                           class="btn btn-primary" 
+                           style="padding: 5px 12px; font-size: 12px; white-space: nowrap; text-decoration: none;">
+                            Uji Kasus &rarr;
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div style="margin-top: 24px; text-align: center;">
+    <a href="{{ url_for('kuesioner') }}" class="btn btn-primary btn-large">
+        Buka Kuesioner Interaktif 25 Indikator
+    </a>
+</div>
+{% endblock %}

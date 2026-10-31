@@ -1,7 +1,7 @@
 """
 Automated Integration and Functional Tests: Sistem Pakar Kesehatan Mental Gen Z
-Memverifikasi fungsionalitas inferensi, kalkulasi Dempster-Shafer, database,
-dan seluruh alur routing Flask (beranda -> kuesioner -> proses -> hasil).
+Memverifikasi fungsionalitas inferensi, kalkulasi Dempster-Shafer, in-memory storage,
+dan seluruh alur routing Flask (beranda -> kuesioner -> proses -> hasil -> uji 10 kasus).
 """
 
 import unittest
@@ -11,7 +11,8 @@ from app import app
 from knowledge_base import INDICATORS, RULES, CONDITIONS, DS_WEIGHTS_JOURNAL
 from forward_chaining import run_forward_chaining
 from dempster_shafer import calculate_dempster_shafer_for_condition, reproduce_journal_narrative_example
-from database import init_db, save_screening, get_screening
+from storage import save_screening, get_screening, clear_screenings
+from benchmark_data import load_10_benchmark_cases, evaluate_all_10_cases, get_benchmark_case
 
 
 class TestExpertSystemCore(unittest.TestCase):
@@ -75,12 +76,31 @@ class TestExpertSystemCore(unittest.TestCase):
         self.assertLessEqual(final_mass["G01"], 1.0)
 
 
+class TestBenchmark10Cases(unittest.TestCase):
+    def test_load_10_cases(self):
+        """Uji kelengkapan 10 kasus acuan."""
+        cases = load_10_benchmark_cases()
+        self.assertEqual(len(cases), 10)
+        # Pastikan setiap kasus memiliki 25 indikator
+        for c in cases:
+            self.assertEqual(len(c["answers"]), 25)
+            self.assertIn("id_kasus", c)
+            self.assertIn("label_acuan_kode", c)
+
+    def test_benchmark_10_cases_accuracy(self):
+        """Uji evaluasi bahwa 10 kasus acuan mencapai akurasi 100%."""
+        eval_res = evaluate_all_10_cases()
+        self.assertEqual(eval_res["total_cases"], 10)
+        self.assertEqual(eval_res["correct_count"], 10)
+        self.assertEqual(eval_res["accuracy_percentage"], 100.0)
+
+
 class TestFlaskWebRoutes(unittest.TestCase):
     def setUp(self):
         app.config["TESTING"] = True
         app.config["WTF_CSRF_ENABLED"] = False
         self.client = app.test_client()
-        init_db()
+        clear_screenings()
 
     def test_home_page(self):
         """Uji akses halaman Beranda."""
@@ -97,6 +117,35 @@ class TestFlaskWebRoutes(unittest.TestCase):
             code = f"K{i:02d}".encode()
             self.assertIn(code, resp.data)
 
+    def test_benchmark_dashboard_page(self):
+        """Uji akses halaman Dashboard Pengujian 10 Kasus."""
+        resp = self.client.get("/uji-10-kasus")
+        self.assertEqual(resp.status_code, 200)
+        self.assertIn(b"Pengujian 10 Data Kasus Acuan", resp.data)
+        self.assertIn(b"100.0%", resp.data)
+        self.assertIn(b"CASE-002", resp.data)
+
+    def test_direct_case_test_route(self):
+        """Uji akses endpoint pengujian satu kasus langsung."""
+        resp = self.client.get("/uji-kasus/CASE-002", follow_redirects=True)
+        self.assertEqual(resp.status_code, 200)
+        self.assertIn(b"Stres", resp.data)
+        self.assertIn(b"99.95%", resp.data)
+
+    def test_api_benchmark_routes(self):
+        """Uji respons endpoint API JSON."""
+        resp1 = self.client.get("/api/benchmark/CASE-002")
+        self.assertEqual(resp1.status_code, 200)
+        data1 = json.loads(resp1.data)
+        self.assertEqual(data1["id_kasus"], "CASE-002")
+        self.assertEqual(data1["label_acuan_kode"], "G01")
+
+        resp2 = self.client.get("/api/evaluasi-10-kasus")
+        self.assertEqual(resp2.status_code, 200)
+        data2 = json.loads(resp2.data)
+        self.assertEqual(data2["total_cases"], 10)
+        self.assertEqual(data2["accuracy_percentage"], 100.0)
+
     def test_about_page(self):
         """Uji akses halaman Tentang Sistem."""
         resp = self.client.get("/tentang")
@@ -105,7 +154,7 @@ class TestFlaskWebRoutes(unittest.TestCase):
 
     def test_process_validation_missing_fields(self):
         """Uji validasi jika pertanyaan kuesioner tidak lengkap."""
-        partial_data = {f"K{i:02d}": "0" for i in range(1, 15)} # Hanya 14 pertanyaan
+        partial_data = {f"K{i:02d}": "0" for i in range(1, 15)}
         resp = self.client.post("/proses", data=partial_data, follow_redirects=True)
         self.assertEqual(resp.status_code, 200)
         self.assertIn(b"Terdapat 11 pertanyaan yang belum Anda jawab", resp.data)

@@ -21,6 +21,36 @@
             <div class="progress-bar-fill" id="progress-fill" style="width: 0%;"></div>
         </div>
     </div>
+
+    <!-- Panel Uji Cepat 10 Kasus Acuan -->
+    {% if benchmark_cases %}
+    <div class="card" style="background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: var(--radius-md); padding: 16px 20px; margin-top: 20px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+            <div>
+                <strong style="color: #1D4ED8; font-size: 14px;">⚡ Pengujian Logika (Isi Otomatis dari 10 Kasus Acuan):</strong>
+                <p style="font-size: 12px; color: #1E40AF; margin-top: 3px; margin-bottom: 0;">
+                    Pilih salah satu dari 10 data kasus penelitian untuk mengisi ke-25 pertanyaan secara otomatis.
+                </p>
+            </div>
+            <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                <select id="benchmark-selector" style="padding: 7px 12px; border-radius: 6px; border: 1px solid #93C5FD; font-size: 13px; background: white; color: #1E3A8A; font-weight: 500;">
+                    <option value="">-- Pilih Kasus Uji --</option>
+                    {% for c in benchmark_cases %}
+                        <option value="{{ c.id_kasus }}" {% if load_case_id == c.id_kasus %}selected{% endif %}>
+                            {{ c.id_kasus }}: {{ c.label_acuan_nama }} ({{ c.kategori_kasus }})
+                        </option>
+                    {% endfor %}
+                </select>
+                <button type="button" id="btn-load-benchmark" class="btn btn-primary" style="padding: 7px 14px; font-size: 13px;">
+                    Terapkan Jawaban
+                </button>
+                <button type="button" id="btn-clear-answers" class="btn btn-secondary" style="padding: 7px 12px; font-size: 13px;">
+                    Reset
+                </button>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </div>
 
 <form action="{{ url_for('proses_kuesioner') }}" method="POST" id="screening-form">
@@ -82,12 +112,20 @@
         </div>
     </div>
 </form>
+
+{% if benchmark_cases %}
+<!-- Data JSON 10 Kasus untuk auto-fill instan -->
+<script id="benchmark-cases-data" type="application/json">
+    {{ benchmark_cases | tojson }}
+</script>
+{% endif %}
 {% endblock %}
 
 {% block scripts %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         initQuestionnaireValidation();
+        initBenchmarkAutoFill();
     });
 </script>
 {% endblock %}

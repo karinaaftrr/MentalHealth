@@ -1,6 +1,6 @@
 RINGKASAN PREPROCESSING DATASET PENELITIAN
 ==================================================
-Waktu Proses             : 2026-10-30 07:26:42
+Waktu Proses             : 2026-10-31 11:44:59
 File Sumber              : dataset\dataset_uji.csv
 Total Sampel Data        : 10 kasus uji
 Total Nilai Kosong/NaN   : 0

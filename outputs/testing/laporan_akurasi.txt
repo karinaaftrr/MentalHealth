@@ -2,7 +2,7 @@ LAPORAN AKURASI DAN EVALUASI SISTEM PAKAR KESEHATAN MENTAL GEN Z
 Berdasarkan Inferensi Forward Chaining & Acuan Kaidah Jurnal IKRAM Vol 4 No 2
 ===========================================================================
 
-Waktu Pengujian           : 2026-10-30 07:26:42
+Waktu Pengujian           : 2026-10-31 11:44:59
 Jumlah Sampel Uji         : 10 kasus acuan berlabel
 Akurasi Sistem (Accuracy) : 100.0% (1.0)
 Macro Average Precision   : 100.00%

@@ -19,15 +19,15 @@ MentalHealt_Project/
 ├── knowledge_base.py          # Definisi indikator (K01-K25), kondisi (G01-G06), aturan (R1-R6), dan bobot
 ├── forward_chaining.py        # Mesin inferensi penalaran berbasis aturan deduktif
 ├── dempster_shafer.py         # Mesin kalkulasi fungsi massa & Teori Kombinasi Dempster
-├── database.py                # Manajemen basis data SQLite (privat & anonim)
-├── database.db                # File basis data SQLite (dihasilkan otomatis)
-├── research_pipeline.py       # Script pipeline eksperimen & evaluasi ilmiah
+├── storage.py                 # Penyimpanan In-Memory (RAM) murni (Bebas Database Fisik SQLite)
+├── benchmark_data.py          # Modul manajemen & evaluasi 10 kasus acuan berlabel
+├── research_pipeline.py       # Script pipeline eksperimen & evaluasi ilmiah (Akurasi 100%)
 ├── evaluation.py              # Perhitungan metrik evaluasi & visualisasi grafik
 ├── requirements.txt           # Daftar dependensi Python
 ├── README.md                  # Dokumentasi teknis & panduan operasional
 ├── dataset/
 │   ├── README.md              # Dokumentasi struktur & metodologi dataset acuan
-│   └── dataset_uji.csv        # Dataset kasus acuan berlabel (benchmark suite)
+│   └── dataset_uji.csv        # Dataset 10 kasus acuan berlabel (benchmark suite)
 ├── outputs/
 │   ├── preprocessing/
 │   │   ├── hasil_preprocessing.csv      # Data hasil pembersihan & validasi biner
@@ -44,7 +44,8 @@ MentalHealt_Project/
 ├── templates/
 │   ├── base.html              # Layout induk & navigasi utama
 │   ├── index.html             # Halaman beranda layanan skrining
-│   ├── questionnaire.html     # Kuesioner interaktif 25 pertanyaan
+│   ├── questionnaire.html     # Kuesioner interaktif 25 pertanyaan + Auto-fill 10 Kasus
+│   ├── uji_10_kasus.html      # Dashboard khusus pengujian & verifikasi 10 data acuan
 │   ├── result.html            # Halaman hasil inferensi & saran
 │   └── about.html             # Transparansi metodologi & aturan
 └── static/

@@ -1,6 +1,7 @@
 /**
  * SCRIPT.JS: Sistem Pakar Deteksi Kesehatan Mental Generasi Z
- * Validasi form kuesioner, pelacakan progres pengisian interaktif, dan penanganan UX.
+ * Validasi form kuesioner, pelacakan progres pengisian interaktif,
+ * dan fitur auto-fill pengujian 10 data kasus acuan (benchmark).
  */
 
 function initQuestionnaireValidation() {
@@ -81,6 +82,9 @@ function initQuestionnaireValidation() {
         return answeredCount;
     }
 
+    // Expose updateProgress agar dapat dipanggil dari luar (auto-fill)
+    window.refreshQuestionnaireProgress = updateProgress;
+
     // Pasang listener pada seluruh radio input
     const allRadios = form.querySelectorAll('.option-radio');
     allRadios.forEach(radio => {
@@ -139,4 +143,86 @@ function initQuestionnaireValidation() {
         }
         return true;
     });
+}
+
+/**
+ * Fitur Auto-Fill Pengujian 10 Data Kasus Acuan
+ */
+function initBenchmarkAutoFill() {
+    const dataElement = document.getElementById('benchmark-cases-data');
+    const selector = document.getElementById('benchmark-selector');
+    const loadBtn = document.getElementById('btn-load-benchmark');
+    const clearBtn = document.getElementById('btn-clear-answers');
+
+    if (!dataElement || !selector) return;
+
+    let cases = [];
+    try {
+        cases = JSON.parse(dataElement.textContent);
+    } catch (e) {
+        console.error("Gagal membaca data kasus acuan:", e);
+        return;
+    }
+
+    const casesMap = {};
+    cases.forEach(c => {
+        casesMap[c.id_kasus] = c;
+    });
+
+    function applyCaseAnswers(caseId) {
+        const selectedCase = casesMap[caseId];
+        if (!selectedCase || !selectedCase.answers) return;
+
+        for (let i = 1; i <= 25; i++) {
+            const code = `K${String(i).padStart(2, '0')}`;
+            const val = selectedCase.answers[code] || 0;
+            const targetRadio = document.querySelector(`input[name="${code}"][value="${val}"]`);
+            if (targetRadio) {
+                targetRadio.checked = true;
+            }
+        }
+
+        if (window.refreshQuestionnaireProgress) {
+            window.refreshQuestionnaireProgress();
+        }
+    }
+
+    if (loadBtn) {
+        loadBtn.addEventListener('click', function() {
+            const caseId = selector.value;
+            if (!caseId) {
+                alert("Silakan pilih salah satu kasus acuan dari dropdown terlebih dahulu.");
+                return;
+            }
+            applyCaseAnswers(caseId);
+        });
+    }
+
+    if (selector) {
+        selector.addEventListener('change', function() {
+            const caseId = selector.value;
+            if (caseId) {
+                applyCaseAnswers(caseId);
+            }
+        });
+    }
+
+    if (clearBtn) {
+        clearBtn.addEventListener('click', function() {
+            for (let i = 1; i <= 25; i++) {
+                const code = `K${String(i).padStart(2, '0')}`;
+                const radios = document.getElementsByName(code);
+                radios.forEach(r => r.checked = false);
+            }
+            if (selector) selector.value = "";
+            if (window.refreshQuestionnaireProgress) {
+                window.refreshQuestionnaireProgress();
+            }
+        });
+    }
+
+    // Jika ada kasus yang sudah terpilih saat page load (dari parameter query string)
+    if (selector.value) {
+        applyCaseAnswers(selector.value);
+    }
 }

@@ -22,6 +22,7 @@
             <nav class="nav-links">
                 <a href="{{ url_for('index') }}" class="nav-item {% if request.path == '/' %}active{% endif %}">Beranda</a>
                 <a href="{{ url_for('kuesioner') }}" class="nav-item {% if request.path == '/kuesioner' %}active{% endif %}">Kuesioner</a>
+                <a href="{{ url_for('uji_10_kasus') }}" class="nav-item {% if request.path == '/uji-10-kasus' %}active{% endif %}">Uji 10 Data Acuan</a>
                 <a href="{{ url_for('tentang') }}" class="nav-item {% if request.path == '/tentang' %}active{% endif %}">Tentang Sistem</a>
             </nav>
         </div>
